@@ -215,8 +215,19 @@ class MPC_min_forward_spacing_timegap:
 
         return u_opt[0]
 
-    def get_accel(self,s,v,ds_dt):
-        return self.AV_mpc_accel(s,v,ds_dt)
+    def get_accel(self):
+
+        global lead_x
+        global lead_rv
+        global velocity
+
+        print('lead_x: '+str(lead_x))
+        print('lead_rv: '+str(lead_rv))
+        print('velocity: '+str(velocity))
+
+
+
+        return self.AV_mpc_accel(float(lead_x),float(velocity),float(lead_rv))
 
 
 class mpc_forward_collision_avoider:
@@ -241,11 +252,7 @@ class mpc_forward_collision_avoider:
                 # Get accel cmd to publish:
                 global mpc_cmd_accel_pub
 
-                global lead_x
-                global lead_rv
-                global velocity
-
-                mpc_cmd_accel = self.mpc_planner.get_accel(float(lead_x),float(velocity),float(lead_rv))
+                mpc_cmd_accel = self.mpc_planner.get_accel()
 
                 mpc_cmd_accel_pub.publish(mpc_cmd_accel)
 
