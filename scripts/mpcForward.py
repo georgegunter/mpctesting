@@ -245,7 +245,10 @@ class mpc_forward_collision_avoider:
                 try:
                     mpc_cmd_accel = self.mpc_planner.get_accel()
                 except:
+                    print('exception to solver.')
                     mpc_cmd_accel = 0.0
+
+                print(mpc_cmd_accel)
 
                 mpc_cmd_accel_pub.publish(mpc_cmd_accel)
 
