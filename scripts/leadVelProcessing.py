@@ -12,10 +12,6 @@ import time
 import bisect
 import numpy as np
 import pandas as pd
-# import shapely
-# from shapely import LineString,Point
-# from shapely.ops import nearest_points
-# from shapely import Polygon
 import json
 
 # velocity_topic = "/car/state/vel_x"
