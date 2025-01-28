@@ -1,0 +1,37 @@
+apps:
+  - name: mpctesting
+    path: mpctesting/
+    properties:
+      - owns_panda: true
+    ros_repositories:
+        - owner: jmscslgroup
+          repo: can_to_ros
+          branch_or_hash: d7134708e49001b407aba4c382c9c6daec6ce0de
+        - owner: jmscslgroup
+          repo: cbf
+          branch_or_hash: test_HO_with_radar
+        - owner: jmscslgroup
+          repo: velocity_controller
+          branch_or_hash: 3f8a36192d41b7d454e9f787ff61b99f287e3e0d
+        - owner: jmscslgroup
+          repo: setpointreader
+          branch_or_hash: bf9116d7e7a8284527e1d94537de1228c2b3abb8apps:
+  - name: mpctesting
+    properties:
+      - owns_panda: true
+    dependencies:
+      - apt: python3-pandas
+      - pip3: cantools
+      - pip3: shapely
+    ros_repositories:
+        - owner: jmscslgroup
+          repo: can_to_ros
+        - owner: jmscslgroup
+          repo: cbf
+          branch_or_hash: original_CBF_implementation_2021
+        - owner: jmscslgroup
+          repo: velocity_controller
+        - owner: jmscslgroup
+          repo: setpointreader
+        - owner: georgegunter
+          repo: mpctesting

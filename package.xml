@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>mpctesting</name>
+  <version>0.1.0</version>
+  <description>The cbf_testing package</description>
+
+  <maintainer email="george.l.gunter@vanderbilt.edu">George Gunter</maintainer>
+
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>rospy</depend>
+  <depend>sensor_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>roscpp</depend>
+  <export>
+  </export>
+</package>
