@@ -171,7 +171,7 @@ class MPC_min_forward_spacing_timegap:
             ubg += [0, 0]
 
             # minimum time-gap constraint:
-            g += [(p_l_vals[k] - Xk[1]) - self.tg_min_forward*Xk[2]]
+            g += [(p_l_vals[k] - Xk[1]) - self.tg_min*Xk[2]]
             lbg += [0.0]
             ubg += [inf]
 
@@ -239,13 +239,13 @@ class mpc_forward_collision_avoider:
                 global lead_rv
                 global velocity
 
-                print('lead_x: '+str(lead_x))
-                print('lead_rv: '+str(lead_rv))
-                print('velocity: '+str(velocity))
-
                 global mpc_cmd_accel_pub
 
-                mpc_cmd_accel = self.mpc_planner.get_accel()
+
+                try:
+                    mpc_cmd_accel = self.mpc_planner.get_accel()
+                except:
+                    mpc_cmd_accel = 0.0
 
                 mpc_cmd_accel_pub.publish(mpc_cmd_accel)
 

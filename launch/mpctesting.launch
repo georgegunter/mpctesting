@@ -8,31 +8,11 @@
 	<arg name="hwil" default="true"/>
 	<arg name="readonly" default="false"/>
 
-<!-- 	<arg name="timegap" default="2.0"/>
-	<arg name="k_timegap" default="0.1"/>
-	<arg name="s_min" default="15.0"/>
-	<arg name="k1" default="0.5"/>
-	<arg name="k2" default="0.5"/>
 
-	<param name="/margin" value="$(arg margin)"/>
-	<param name="/use_margin" value="$(arg use_margin)"/>
-	<param name="/hwil" value="$(arg hwil)"/>
-	<param name="/readonly" value="$(arg readonly)"/>
-
-	<param name="/timegap" value="$(arg timegap)"/>
-	<param name="/k_timegap" value="$(arg k_timegap)"/>
-	<param name="/s_min" value="$(arg s_min)"/>
-	<param name="/k1" value="$(arg k1)"/>
-	<param name="/k2" value="$(arg k2)"/> -->
-
-	<node pkg="can_to_ros" type ="subs_fs" name="subs_fs" output="screen" if="$(arg hwil)"/>
-	<!-- <node pkg="can_to_ros" type ="subs" name="subs" output="screen" if="$(arg hwil)"/> -->
-
-	<node pkg="can_to_ros" type="lead_info" name="lead_info" output="screen" if="$(arg hwil)"/>
-
-	<node pkg="can_to_ros" type="simple_mini_car_from_lead_distance" name="simple_mini_car_from_lead_distance" output="screen" if="$(arg hwil)"/>
-
-	<!--node pkg="can_to_ros" type="cruise_start_safety_check" name="cruise_start_safety_check" output="screen" if="$(arg hwil)"/-->
+	<node pkg="can_to_ros" type="vehicle_interface" name="vehicle_interface" output="screen" respawn="true" respawn_delay="2" />
+	<node pkg="can_to_ros" type ="subs" name="subs" output="screen" if="$(arg hwil)">
+	</node>
+	<include file="$(find can_to_ros)launch/safety_checks.launch" />
 
 
 	<node pkg="margin" type="margin_node" name="margin_node" output="screen" if="$(arg use_margin)">
@@ -47,18 +27,13 @@
 		<remap from="/cmd_accel" to="/cmd_accel_pre"/>
 	</node>
 
- 
+	<node pkg="can_to_ros" type ="rosbag_record.sh" name="bashscript2" output="screen" args="$(arg description) $(arg hwil)" />
+
+
  	<node pkg="mpctesting" type="mpcForward.py" name="leadVelProcessing" output="screen" />
 
 	<node pkg="mpctesting" type="leadVelProcessing.py" name="leadVelProcessing" output="screen" />
 
-	<node pkg="can_to_ros" type ="rosbag_record.sh" name="bashscript2" output="screen" args="$(arg description) $(arg hwil)" />
-
-
-
-	<!-- <node pkg="transfer_pkg" type="saveparam.py" name="saveparam" output="screen" args="$(arg description) $(arg hwil)"> -->
-	<!-- this is deprecated until updated -->
-	<!-- </node> -->
 
 
 </launch>
