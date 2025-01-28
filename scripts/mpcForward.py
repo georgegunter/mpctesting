@@ -225,17 +225,6 @@ class mpc_forward_collision_avoider:
         rospy.Subscriber(lead_rv_topic, Float64, lead_rv_callback)
         rospy.Subscriber(velocity_topic,Float64, velocity_callback)
 
-
-        global lead_x
-        global lead_rv
-        global velocity
-
-        print('lead_x: '+str(lead_x))
-        print('lead_rv: '+str(lead_rv))
-        print('velocity: '+str(velocity))
-
-
-
         global mpc_cmd_accel_pub
         mpc_cmd_accel_pub = rospy.Publisher('/mpc_cmd_accel', Float64, queue_size=1000)
  
@@ -245,6 +234,15 @@ class mpc_forward_collision_avoider:
         while not rospy.is_shutdown():
             try:
                 # Get accel cmd to publish:
+
+                global lead_x
+                global lead_rv
+                global velocity
+
+                print('lead_x: '+str(lead_x))
+                print('lead_rv: '+str(lead_rv))
+                print('velocity: '+str(velocity))
+
                 global mpc_cmd_accel_pub
 
                 mpc_cmd_accel = self.mpc_planner.get_accel()
