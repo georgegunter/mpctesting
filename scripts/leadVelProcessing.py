@@ -47,7 +47,7 @@ social_limit_v = 0
 base_social_limit = 2
 distance_lines = 0
 max_speed = 32 ##32 m/s is 71.6 mph
-# velocity = None
+velocity = 0
 lead_x=252
 lead_rv=0
 radar0,radar1,radar2,radar3,radar4,radar5,radar6,radar7 = None,None,None,None,None,None,None,None
@@ -235,6 +235,11 @@ def get_box_filtered_radar():
     global radar_state #list of list of most recent radar points
     global lead_x #lead_dist
     global lead_rv #rel_vel
+
+    print('lead_x: '+str(lead_x))
+    print('lead_rv: '+str(lead_rv))
+    print('velocity: '+str(velocity))
+
     ### Use a box to filter
 
     # This is default, sends nothing
