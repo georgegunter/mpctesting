@@ -31,11 +31,6 @@ velocity_topic = "/car/state/vel_x"
 
 
 max_speed = 32 ##32 m/s is 71.6 mph
-velocity = None
-lead_x=252
-lead_rv=0
-
-mpc_cmd_accel = None
 
 global lead_x
 global lead_rv
@@ -43,6 +38,11 @@ global velocity
 
 global mpc_cmd_accel
 
+
+velocity = None
+lead_x=252
+lead_rv=0
+mpc_cmd_accel = None
 
 
 def velocity_callback(data):
