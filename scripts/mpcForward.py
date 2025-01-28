@@ -258,7 +258,7 @@ class mpc_forward_collision_avoider:
 
 if __name__ == '__main__':
     try:
-        head = mpc_forward_collision_avoiderr()
+        head = mpc_forward_collision_avoider()
         head.loop()
     except Exception as e:
         print(e)
