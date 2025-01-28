@@ -37,6 +37,14 @@ lead_rv=0
 
 mpc_cmd_accel = None
 
+global lead_x
+global lead_rv
+global velocity
+
+global mpc_cmd_accel
+
+
+
 def velocity_callback(data):
     global velocity
     velocity = data.data
@@ -48,24 +56,6 @@ def lead_x_callback(data):
 def lead_rv_callback(data):
     global lead_rv
     lead_rv = data.data
-
-
-def recursivePop():
-    global radar_state
-    if len(radar_state[3]) !=0:
-        oldest_time = radar_state[3].pop(0)
-        #print(oldest_time, time.time())
-        if abs(oldest_time - time.time()) > 0.1:
-            radar_state[0].pop(0) #pop the oldest stuff
-            radar_state[1].pop(0)
-            radar_state[2].pop(0)
-            recursivePop()
-        else:
-            radar_state[3].insert(0,oldest_time)
-    else:
-        return
-
-
 
 class MPC_min_forward_spacing_timegap:
     def __init__(self,tg_min,s_min,v_des,T=2.0,N=20,alpha_smooth=0.1,alpha_v_cntrl=0.1,use_all_control=False):
@@ -221,12 +211,6 @@ class MPC_min_forward_spacing_timegap:
         global lead_rv
         global velocity
 
-        print('lead_x: '+str(lead_x))
-        print('lead_rv: '+str(lead_rv))
-        print('velocity: '+str(velocity))
-
-
-
         return self.AV_mpc_accel(float(lead_x),float(velocity),float(lead_rv))
 
 
@@ -240,6 +224,17 @@ class mpc_forward_collision_avoider:
         rospy.Subscriber(lead_x_topic, Float64, lead_x_callback)
         rospy.Subscriber(lead_rv_topic, Float64, lead_rv_callback)
         rospy.Subscriber(velocity_topic,Float64, velocity_callback)
+
+
+        global lead_x
+        global lead_rv
+        global velocity
+
+        print('lead_x: '+str(lead_x))
+        print('lead_rv: '+str(lead_rv))
+        print('velocity: '+str(velocity))
+
+
 
         global mpc_cmd_accel_pub
         mpc_cmd_accel_pub = rospy.Publisher('/mpc_cmd_accel', Float64, queue_size=1000)
