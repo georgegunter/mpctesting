@@ -13,6 +13,6 @@ apps:
         - owner: jmscslgroup
           repo: velocity_controller
         - owner: jmscslgroup
-          repo: setpointreader
+          repo: set_point_adapter
         - owner: georgegunter
           repo: mpctesting

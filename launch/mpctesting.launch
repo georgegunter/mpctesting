@@ -18,10 +18,9 @@
 	<node pkg="margin" type="margin_node" name="margin_node" output="screen" if="$(arg use_margin)">
 	</node>
 
-	<node pkg="setpointreader" type="setpointreader" name="setpointreader" output="screen" required="true" >
-		<remap from="/v_ref" to="/cmd_vel"/>
+	<node pkg="set_point_adapter" type="set_point_adapter" name="set_point_adapter" output="screen" required="true" >
+		<remap from="/v_ref_float" to="/cmd_vel"/>
 	</node>
-
 	<node pkg="velocity_controller" type="velocity_controller_node" name="velocity_controller_node" output="screen">
 		<remap from="/vehicle/vel" to="/vel"/>
 		<remap from="/cmd_accel" to="/cmd_accel_pre"/>
