@@ -265,7 +265,7 @@ def get_box_filtered_radar():
             ds_dt = lead_rv #relative speed from 869 msg
             if(np.abs(lead_x - x) < max_x_diff):
 #                 points_near_lead_dist[t].append(i)
-                # print('points exist in box')
+                print('points exist in box')
 # In a [1 x 2] box of lead_dist right in front
                 if(np.abs(ds_dt_radar - lead_rv) < max_rel_vel_diff):
                     radar_dist = np.sqrt(x**2 + y**2)
@@ -274,12 +274,11 @@ def get_box_filtered_radar():
                     dists_in_the_box.append(radar_dist)
                     rel_vels_in_the_box.append(radar_rel_vel)
                 else:
-                    # print('rel vels do not match')
-
+                    print('rel vels do not match')
     if(len(dists_in_the_box)>0):
         mean_box_filtered_radar_dist = np.mean(dists_in_the_box)
         mean_box_filtered_radar_rel_vel = np.mean(rel_vels_in_the_box)
-        # print('found point')
+        print('found point')
     return mean_box_filtered_radar_dist,mean_box_filtered_radar_rel_vel
 
     # matched_values=[]
