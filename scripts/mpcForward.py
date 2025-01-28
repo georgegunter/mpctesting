@@ -39,10 +39,10 @@ global velocity
 global mpc_cmd_accel
 
 
-velocity = None
+velocity = 0
 lead_x=252
 lead_rv=0
-mpc_cmd_accel = None
+mpc_cmd_accel = 0
 
 
 def velocity_callback(data):
@@ -63,6 +63,7 @@ class MPC_min_forward_spacing_timegap:
         self.v_des = v_des
         self.dt = T/N
         self.s_min = s_min
+        self.tg_min = tg_min
 
         self.T = T # Prediction time horizon
         self.N = N # number of control intervals
