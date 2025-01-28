@@ -28,13 +28,14 @@ import json
 lead_x_topic = "/lead_dist"
 lead_rv_topic = "/rel_vel"
 velocity_topic = "/car/state/vel_x"
-
+cmd_vel_topic = "/cmd_vel"
 
 max_speed = 32 ##32 m/s is 71.6 mph
 
 global lead_x
 global lead_rv
 global velocity
+global cmd_vel
 
 global mpc_cmd_accel
 
@@ -42,6 +43,7 @@ global mpc_cmd_accel
 velocity = 0
 lead_x=252
 lead_rv=0
+cmd_vel=15.0
 mpc_cmd_accel = 0
 
 
@@ -56,6 +58,10 @@ def lead_x_callback(data):
 def lead_rv_callback(data):
     global lead_rv
     lead_rv = data.data
+
+def cmd_vel_callback(data):
+    global cmd_vel
+    cmd_vel = data.data
 
 class MPC_min_forward_spacing_timegap:
     def __init__(self,tg_min,s_min,v_des,T=2.0,N=20,alpha_smooth=0.1,alpha_v_cntrl=0.1,use_all_control=False):
@@ -144,7 +150,7 @@ class MPC_min_forward_spacing_timegap:
             Uk = MX.sym('U_' + str(k))
             w   += [Uk]
             lbw += [-5]
-            ubw += [5]
+            ubw += [1.5]
             w0  += [0]
 
             # Integrate till the end of the interval
@@ -171,10 +177,10 @@ class MPC_min_forward_spacing_timegap:
             lbg += [0, 0]
             ubg += [0, 0]
 
-            # minimum time-gap constraint:
-            g += [(p_l_vals[k] - Xk[1]) - self.tg_min*Xk[2]]
-            lbg += [0.0]
-            ubg += [inf]
+            # # minimum time-gap constraint:
+            # g += [(p_l_vals[k] - Xk[1]) - self.tg_min*Xk[2]]
+            # lbg += [0.0]
+            # ubg += [inf]
 
         # Create an NLP solver
         prob = {'f': J, 'x': vertcat(*w), 'g': vertcat(*g)}
@@ -212,7 +218,14 @@ class MPC_min_forward_spacing_timegap:
         global lead_rv
         global velocity
 
-        return self.AV_mpc_accel(float(lead_x),float(velocity),float(lead_rv))
+        u = 0.0
+
+        try:
+            u = self.AV_mpc_accel(float(lead_x),float(velocity),float(lead_rv))
+        except:
+            u = -5.0
+
+        return u
 
 
 class mpc_forward_collision_avoider:
@@ -239,11 +252,11 @@ class mpc_forward_collision_avoider:
                 global lead_x
                 global lead_rv
                 global velocity
-
+                global cmd_vel
                 global mpc_cmd_accel_pub
 
-
                 try:
+                    self.mpc_planner.v_des = cmd_vel
                     mpc_cmd_accel = self.mpc_planner.get_accel()
                 except Exception as e:
                     print(e)
