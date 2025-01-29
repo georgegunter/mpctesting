@@ -1,7 +1,7 @@
 #!/bin/bash
 # Author: Matt Nice,Matt Bunting
 
-LAUNCH_FILE=mpctesting
+LAUNCH_FILE=mpctesting.launch
 
 echo "----------------------------"
 if [[ $EUID == 0 ]];
