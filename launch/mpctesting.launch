@@ -29,7 +29,7 @@
 	<node pkg="can_to_ros" type ="rosbag_record.sh" name="bashscript2" output="screen" args="$(arg description) $(arg hwil)" />
 
 
- 	<node pkg="mpctesting" type="mpcForward.py" name="leadVelProcessing" output="screen" />
+ 	<node pkg="mpctesting" type="mpcForward.py" name="mpcForward" output="screen" />
 
 	<node pkg="mpctesting" type="leadVelProcessing.py" name="leadVelProcessing" output="screen" />
 
